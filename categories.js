@@ -15,6 +15,7 @@ module.exports = async function () {
 	const statusStore = await getModule(['getStatus']);
 	const typingStore = await getModule(['isTyping']);
 	const channelOpen = await getModule(['openPrivateChannel']);
+	const { hasUnread } = await getModule(['hasUnread']);
 	const classes = {
 		...(await getModule(['channel', 'closeButton'])),
 		...(await getModule(['avatar', 'muted', 'selected'])),
@@ -66,6 +67,7 @@ module.exports = async function () {
 				isMobile: statusStore.isMobileOnline(userId),
 				isTyping: typingStore.isTyping(channelStore.getDMFromUserId(userId), userId),
 				activities: activityStore.getActivities(userId),
+				hasUnreadMessages: hasUnread(channel.id),
 				isFavFriends: true,
 			};
 		}
