@@ -16,7 +16,10 @@ module.exports = class FavoriteFriends extends React.PureComponent {
 		const { classes, category, _this } = this.props;
 		if (!classes || !category || !category.ids.length) return null;
 		const { lastMessageId } = getModule(['lastMessageId'], false);
+		const { getChannel } = getModule(['getChannel'], false);
 		const { getDMFromUserId } = getModule(['getDMFromUserId'], false);
+		const { DirectMessage } = getModule(['DirectMessage'], false);
+
 		return [
 			// Header
 			<h2 className={`${classes.privateChannelsHeaderContainer} container-2ax-kl`}>
@@ -41,7 +44,15 @@ module.exports = class FavoriteFriends extends React.PureComponent {
 			this.state.expanded
 				? category.ids
 						.sort((a, b) => lastMessageId(getDMFromUserId(b)) - lastMessageId(getDMFromUserId(a)))
-						.map(userId => <this.props.ConnectedPrivateChannel userId={userId} currentSelectedChannel={this.props.selectedChannelId} />)
+						.map(userId => (
+							<DirectMessage
+								aria-posinset={7}
+								aria-setsize={54}
+								tabIndex={-1}
+								channel={getChannel(getDMFromUserId(userId))}
+								selected={this.props.selectedChannelId === getDMFromUserId(userId)}
+							/>
+						))
 				: null,
 		];
 	}
