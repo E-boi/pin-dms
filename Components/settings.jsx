@@ -20,32 +20,33 @@ module.exports = class pinDMsSettings extends React.PureComponent {
 				opened={this.state.category0Opened}
 				onChange={() => this.setState({ category0Opened: !this.state.category0Opened })}
 			>
-				{categories.length > 0 ? (
-					<div>
-						{categories.map((category, idx) => (
-							<TextInput
-								type="text"
-								placeholder="Enter category name"
-								defaultValue={category.name}
-								buttonText="Remove"
-								buttonIcon="fal fa-minus"
-								onChange={val => {
-									categories[idx].name = val;
-									updateSetting('categories', categories);
-								}}
-								buttonOnClick={() => {
-									categories.splice(idx, 1);
-									updateSetting('categories', categories);
-								}}
-							/>
-						))}
-						<Button onClick={() => categories.push({ name: 'New Category', ids: [] })}>
-							<span>Add category</span>
-						</Button>
-					</div>
-				) : (
-					<div></div>
-				)}
+				<div>
+					{categories.map((category, idx) => (
+						<TextInput
+							type="text"
+							placeholder="Enter category name"
+							defaultValue={category.name}
+							buttonText="Remove"
+							buttonIcon="fal fa-minus"
+							onChange={val => {
+								categories[idx].name = val;
+								updateSetting('categories', categories);
+							}}
+							buttonOnClick={() => {
+								categories.splice(idx, 1);
+								updateSetting('categories', categories);
+							}}
+						/>
+					))}
+					<Button
+						onClick={() => {
+							categories.push({ name: 'New Category', ids: [] });
+							updateSetting('categories', categories);
+						}}
+					>
+						<span>Add category</span>
+					</Button>
+				</div>
 			</Category>
 		);
 	}
