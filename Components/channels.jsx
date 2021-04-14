@@ -4,7 +4,6 @@ const { getModule, React } = require('powercord/webpack');
 module.exports = class FavoriteFriends extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.state = { expanded: props._this.expanded ?? true };
 		props._this.categoryInstance = this;
 	}
