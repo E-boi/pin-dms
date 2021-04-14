@@ -104,4 +104,10 @@ module.exports = class pinDMs extends Plugin {
 		});
 		UserContextMenu.default.displayName = moduleName;
 	}
+
+	pluginWillUnload() {
+		uninject('pindms-direct-messages');
+		for (const moduleName of this.contextMenus) uninject(`pindms-${moduleName}`);
+		powercord.api.settings.unregisterSettings(this.entityID);
+	}
 };
